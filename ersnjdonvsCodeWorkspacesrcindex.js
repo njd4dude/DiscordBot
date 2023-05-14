@@ -1,0 +1,26 @@
+[33mcommit 3b6e51d7ec818628b9b3ece935dba73893225056[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Nathan Donato <59492192+njd4dude@users.noreply.github.com>
+Date:   Sat May 13 18:45:57 2023 -0700
+
+    updated new Message
+
+[1mdiff --git a/src/index.js b/src/index.js[m
+[1mindex 78f8863..26af00b 100644[m
+[1m--- a/src/index.js[m
+[1m+++ b/src/index.js[m
+[36m@@ -16,10 +16,14 @@[m [mclient.on("ready", (c) => {[m
+ [m
+ client.on("messageCreate", (message) => {[m
+   if (message.author.bot) return;[m
+[31m-  [m
+[32m+[m
+   if (message.content === "ping") {[m
+     message.reply("ping");[m
+   }[m
+[32m+[m
+[32m+[m[32m  if (message.content === "bruh") {[m
+[32m+[m[32m    message.reply("what bruh");[m
+[32m+[m[32m  }[m
+ });[m
+ [m
+ client.login(process.env.TOKEN);[m
