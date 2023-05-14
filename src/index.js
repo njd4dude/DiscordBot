@@ -16,9 +16,13 @@ client.on("ready", (c) => {
 
 client.on("messageCreate", (message) => {
   if (message.author.bot) return;
-  
+
   if (message.content === "ping") {
     message.reply("ping");
+  }
+
+  if (message.content === "bruh") {
+    message.reply("what bruh");
   }
 });
 
