@@ -7,12 +7,14 @@ const {
 const eventHandler = require("./handlers/eventHandler");
 require("dotenv").config();
 
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildVoiceStates,
   ],
 });
 eventHandler(client);
@@ -133,5 +135,6 @@ client.on("interactionCreate", async (interaction) => {
     interaction.reply({ embeds: [embed] });
   }
 });*/
+
 
 client.login(process.env.TOKEN);

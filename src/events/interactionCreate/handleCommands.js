@@ -11,6 +11,7 @@ module.exports = async (client, interaction) => {
     const commandObject = localCommands.find(
       (cmd) => cmd.name === interaction.commandName
     );
+  
 
     if (!commandObject) return;
 
