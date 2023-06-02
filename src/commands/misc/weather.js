@@ -1,9 +1,9 @@
-/*const { spawn } = require("child_process");
+const { spawn } = require("child_process");
 const { ApplicationCommandOptionType } = require("discord.js");
 require('dotenv').config();
 
 module.exports = {
-  name: "weather",
+  name: "weather2",
   description: "gets the weather!",
   options: [
     {
@@ -28,7 +28,10 @@ module.exports = {
 
     //the data here means whatever is printed out to the console in the python script
     pythonScript.stdout.on("data", async (data) => {
-      let obj = JSON.parse(data.toString());
+      let obj = JSON.parse(data);
+      console.log("\n\n\nnDATA------: "+ data);
+      console.log("\n\n\nnDATATOSTRING------: "+ data.toString());
+      console.log("\n\n\nnOBJ------: "+ obj.temperature);
 
       await interaction.editReply(
         `Temperature is ${obj.temperature} in ${obj.city}`
@@ -44,4 +47,3 @@ module.exports = {
     });
   },
 };
-*/
