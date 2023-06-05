@@ -6,7 +6,10 @@ const {
   createAudioPlayer,
   createAudioResource,
   NoSubscriberBehavior,
+  AudioPlayerStatus,
+  AudioResourceState,
 } = require("@discordjs/voice");
+const { url } = require("inspector");
 
 let connection;
 
@@ -39,9 +42,10 @@ async function pythonSearch(keywords) {
 }
 
 async function playMusic(client, interaction) {
+  await interaction.deferReply();
   const voiceChannel = interaction.member.voice.channel;
   if (!voiceChannel) {
-    return interaction.reply(
+    return interaction.editReply(
       "You must be in a voice channel to use this command."
     );
   }
@@ -56,8 +60,10 @@ async function playMusic(client, interaction) {
     console.log(keywords);
     const videoURL = await pythonSearch(keywords); // Await the videoURL
     console.log("VID ", videoURL);
-
-    const stream = ytdl(videoURL, { filter: "audioonly" });
+    /////The problem seems to be copyright/licensing issues so it wont play the whole video.
+    const stream = ytdl(videoURL, {
+      filter: "videoandaudio",
+    });
     const resource = createAudioResource(stream, { inlineVolume: true });
     const player = createAudioPlayer({
       behaviors: {
@@ -69,23 +75,29 @@ async function playMusic(client, interaction) {
 
     player.on("error", (error) => {
       console.error(error);
-      interaction.reply("There was an error trying to play the song.");
+      interaction.editReply("There was an error trying to play the song.");
     });
 
-    player.on("stateChange", (state) => {
+    /*player.on("stateChange", (state) => {
       if (state.status === "idle") {
-        interaction.reply("Finished playing the song.");
+        interaction.editReply("Finished playing the song.");
         connection.destroy();
       }
+    });*/
+    player.on("stateChange", (oldState, newState) => {
+      if (newState.status === AudioPlayerStatus.Idle) {
+        interaction.editReply("Finished playing the song.");
+       
+      }
     });
+    
 
-    interaction.reply("Playing the song...");
+    interaction.editReply("Playing the song...");
   } catch (error) {
     console.error(error);
-    interaction.reply("There was an error trying to play the song.");
+    interaction.editReply("There was an error trying to play the song.");
   }
 }
-
 
 // Function declaration
 function getConnection() {
